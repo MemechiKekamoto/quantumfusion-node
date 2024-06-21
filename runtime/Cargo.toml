@@ -74,6 +74,7 @@ frame-system-benchmarking = { git = "https://github.com/paritytech/polkadot-sdk.
 
 # The pallet in quantumfusion.
 pallet-quantumfusion = { path = "../pallets/quantumfusion", default-features = false }
+pallet-offchaingate = { path = "../pallets/offchaingate", default-features = false }
 
 [build-dependencies]
 substrate-wasm-builder = { git = "https://github.com/paritytech/polkadot-sdk.git", tag = "polkadot-v1.9.0", optional = true }
@@ -98,6 +99,7 @@ std = [
 	"pallet-grandpa/std",
 	"pallet-sudo/std",
 	"pallet-quantumfusion/std",
+	"pallet-offchaingate/std",
 	"pallet-timestamp/std",
 	"pallet-transaction-payment-rpc-runtime-api/std",
 	"pallet-transaction-payment/std",
@@ -129,6 +131,7 @@ runtime-benchmarks = [
 	"pallet-grandpa/runtime-benchmarks",
 	"pallet-sudo/runtime-benchmarks",
 	"pallet-quantumfusion/runtime-benchmarks",
+	"pallet-offchaingate/runtime-benchmarks",
 	"pallet-timestamp/runtime-benchmarks",
 	"sp-runtime/runtime-benchmarks",
 ]
@@ -143,6 +146,7 @@ try-runtime = [
 	"pallet-grandpa/try-runtime",
 	"pallet-sudo/try-runtime",
 	"pallet-quantumfusion/try-runtime",
+	"pallet-offchaingate/try-runtime",
 	"pallet-timestamp/try-runtime",
 	"pallet-transaction-payment/try-runtime",
 	"sp-runtime/try-runtime",

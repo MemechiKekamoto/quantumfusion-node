@@ -43,6 +43,7 @@ pub use sp_runtime::{Perbill, Permill};
 
 /// Import the quantumfusion pallet.
 pub use pallet_quantumfusion;
+pub use pallet_offchaingate;
 
 /// An index to a block.
 pub type BlockNumber = u32;
@@ -91,8 +92,8 @@ pub mod opaque {
 // https://docs.substrate.io/main-docs/build/upgrade#runtime-versioning
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("solochain-quantumfusion-runtime"),
-	impl_name: create_runtime_str!("solochain-quantumfusion-runtime"),
+	spec_name: create_runtime_str!("quantumfusion-runtime"),
+	impl_name: create_runtime_str!("quantumfusion-runtime"),
 	authoring_version: 1,
 	// The version of the runtime specification. A full node will not attempt to use its native
 	//   runtime in substitute for the on-chain Wasm runtime unless all of `spec_name`,
@@ -251,6 +252,12 @@ impl pallet_quantumfusion::Config for Runtime {
 	type WeightInfo = pallet_quantumfusion::weights::SubstrateWeight<Runtime>;
 }
 
+/// Configure the pallet-offchaingate in pallets/offchaingate.
+impl pallet_offchaingate::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = pallet_offchaingate::weights::SubstrateWeight<Runtime>;
+}
+
 // Create the runtime by composing the FRAME pallets that were previously configured.
 #[frame_support::runtime]
 mod runtime {
@@ -291,7 +298,11 @@ mod runtime {
 
 	// Include the custom logic from the pallet-quantumfusion in the runtime.
 	#[runtime::pallet_index(7)]
-	pub type QuantumfusionModule = pallet_quantumfusion;
+	pub type QuantumFusionModule = pallet_quantumfusion;
+
+	// Include the custom logic from the pallet-offchaingate in the runtime.
+	#[runtime::pallet_index(8)]
+	pub type OffchainGateModule = pallet_offchaingate;
 }
 
 /// The address format for describing accounts.
@@ -341,7 +352,8 @@ mod benches {
 		[pallet_balances, Balances]
 		[pallet_timestamp, Timestamp]
 		[pallet_sudo, Sudo]
-		[pallet_quantumfusion, QuantumfusionModule]
+		[pallet_quantumfusion, QuantumFusionModule]
+		[pallet_offchaingate, OffchainGateModule]
 	);
 }
 
