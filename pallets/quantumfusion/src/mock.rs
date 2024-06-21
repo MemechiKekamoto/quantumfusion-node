@@ -16,7 +16,7 @@ frame_support::construct_runtime!(
 	pub enum Test
 	{
 		System: frame_system,
-		QuantumfusionModule: pallet_quantumfusion,
+		QuantumFusionModule: pallet_quantumfusion,
 	}
 );
 
