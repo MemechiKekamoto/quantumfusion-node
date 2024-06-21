@@ -1,13 +1,14 @@
 [workspace.package]
-authors = ["<https://github.com/diehard0413>"]
+authors = ["<https://github.com/MemechiKekamoto>"]
 edition = "2021"
-repository = "https://github.com/diehard0413/quantumfusion-node/"
+repository = "https://github.com/MemechiKekamoto/quantumfusion-node/"
 license = "MIT-0"
 homepage = "https://quantumfusion.pro"
 
 [workspace]
 members = [
     "node",
+    "pallets/offchaingate",
     "pallets/quantumfusion",
     "runtime",
 ]
