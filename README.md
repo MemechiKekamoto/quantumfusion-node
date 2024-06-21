@@ -1,21 +1,31 @@
-# Quantumfusion Node
+# QuantumFusion Network Node
 
-A fresh [Substrate](https://substrate.io/) node, ready for hacking :rocket:
+Welcome to the QuantumFusion Network Node repository. QuantumFusion Network leverages the power of HVM2 (Higher-Order Virtual Machine 2), a state-of-the-art parallel evaluator for Interaction Combinators. HVM2 offers near-ideal speedup in computational tasks, scaling from millions to billions of interactions per second.
 
-A standalone version of quantumfusion node is availablein the [Quantum Fusion](https://github.com/diehard0413/quantumfusion-node/)
-repository.
+## Vision
 
-It is usually best to use the stand-alone version to start a new project. All
-bugs, suggestions, and feature requests should be made upstream in the
-[Substrate](https://github.com/paritytech/polkadot-sdk/tree/master/substrate)
-repository.
+At QuantumFusion Network, we envision a world where computational limits are shattered. By leveraging HVM2 technology, we enable direct execution of raw mathematical constructs on GPUs, freeing AI algorithms from traditional constraints. This breakthrough allows for the development of revolutionary AI architectures and algorithms that were previously unimaginable.
+
+While current AI algorithms are designed around GPU limitations, this technology opens the door to new possibilities, potentially leading to advancements far beyond today's large language models. Join us in pioneering the future of parallel computing, driving innovation, and transforming technology across industries.
+
+## QuantumFusion(QF) Token
+
+The QuantumFusion (QF) ERC-20 token is at the heart of our ecosystem. By holding QF tokens, you contribute to the development and expansion of the Blend, HVM, and QuantumFusion Network. Funds raised through QF token sales will be allocated to the following key areas:
+
+- Blockchain Development: Accelerating the implementation of HVM2 technology into our blockchain infrastructure.
+- Research and Innovation: Supporting the ongoing research and development efforts to enhance HVM2 and explore new applications.
+- Community and Ecosystem Growth: Building a robust community of developers, researchers, and enthusiasts to drive adoption and innovation.
 
 ## Getting Started
 
-Depending on your operating system and Rust version, there might be additional
-packages required to compile this node. Check the
-[Install](https://docs.substrate.io/install/) instructions for your platform for
-the most common dependencies.
+Below you will find instructions on setting up, building, and running the QuantumFusion Node.
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- [Rust](https://doc.rust-lang.org/)
+- [Substrate](https://docs.substrate.io/)
 
 ### Build
 
@@ -25,27 +35,9 @@ Use the following command to build the node without launching it:
 cargo build --release
 ```
 
-### Embedded Docs
+### Run a Single-Node Development Chain
 
-After you build the project, you can use the following command to explore its
-parameters and subcommands:
-
-```sh
-./target/release/quantumfusion-node -h
-```
-
-You can generate and view the [Rust
-Docs](https://doc.rust-lang.org/cargo/commands/cargo-doc.html) for this node
-with this command:
-
-```sh
-cargo +nightly doc --open
-```
-
-### Single-Node Development Chain
-
-The following command starts a single-node development chain that doesn't
-persist state:
+The following command starts a single-node development chain that doesn't persist state:
 
 ```sh
 ./target/release/quantumfusion-node --dev
@@ -63,137 +55,14 @@ To start the development chain with detailed logging, run the following command:
 RUST_BACKTRACE=1 ./target/release/quantumfusion-node -ldebug --dev
 ```
 
-Development chains:
+## Contributing
 
-- Maintain state in a `tmp` folder while the node is running.
-- Use the **Alice** and **Bob** accounts as default validator authorities.
-- Use the **Alice** account as the default `sudo` account.
-- Are preconfigured with a genesis state (`/node/src/chain_spec.rs`) that
-  includes several prefunded development accounts.
+We welcome contributions from the community. If you wish to contribute, please fork the repository and submit a pull request.
 
-To persist chain state between runs, specify a base path by running a command
-similar to the following:
+## License
 
-```sh
-// Create a folder to use as the db base path
-$ mkdir my-chain-state
+This project is licensed under the terms of the MIT license.
 
-// Use of that folder to store the chain state
-$ ./target/release/quantumfusion-node --dev --base-path ./my-chain-state/
+## Join Us
 
-// Check the folder structure created inside the base path after running the chain
-$ ls ./my-chain-state
-chains
-$ ls ./my-chain-state/chains/
-dev
-$ ls ./my-chain-state/chains/dev
-db keystore network
-```
-
-### Connect with Polkadot-JS Apps Front-End
-
-After you start the quantumfusion node locally, you can interact with it using the
-hosted version of the [Polkadot/Substrate
-Portal](https://polkadot.js.org/apps/#/explorer?rpc=ws://localhost:9944)
-front-end by connecting to the local node endpoint. A hosted version is also
-available on [IPFS (redirect) here](https://dotapps.io/) or [IPNS (direct)
-here](ipns://dotapps.io/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/explorer). You can
-also find the source code and instructions for hosting your own instance on the
-[`polkadot-js/apps`](https://github.com/polkadot-js/apps) repository.
-
-### Multi-Node Local Testnet
-
-If you want to see the multi-node consensus algorithm in action, see [Simulate a
-network](https://docs.substrate.io/tutorials/build-a-blockchain/simulate-network/).
-
-## Structure
-
-A Substrate project such as this consists of a number of components that are
-spread across a few directories.
-
-### Node
-
-A blockchain node is an application that allows users to participate in a
-blockchain network. Substrate-based blockchain nodes expose a number of
-capabilities:
-
-- Networking: Substrate nodes use the [`libp2p`](https://libp2p.io/) networking
-  stack to allow the nodes in the network to communicate with one another.
-- Consensus: Blockchains must have a way to come to
-  [consensus](https://docs.substrate.io/fundamentals/consensus/) on the state of
-  the network. Substrate makes it possible to supply custom consensus engines
-  and also ships with several consensus mechanisms that have been built on top
-  of [Web3 Foundation
-  research](https://research.web3.foundation/en/latest/polkadot/NPoS/index.html).
-- RPC Server: A remote procedure call (RPC) server is used to interact with
-  Substrate nodes.
-
-There are several files in the `node` directory. Take special note of the
-following:
-
-- [`chain_spec.rs`](./node/src/chain_spec.rs): A [chain
-  specification](https://docs.substrate.io/build/chain-spec/) is a source code
-  file that defines a Substrate chain's initial (genesis) state. Chain
-  specifications are useful for development and testing, and critical when
-  architecting the launch of a production chain. Take note of the
-  `development_config` and `testnet_genesis` functions,. These functions are
-  used to define the genesis state for the local development chain
-  configuration. These functions identify some [well-known
-  accounts](https://docs.substrate.io/reference/command-line-tools/subkey/) and
-  use them to configure the blockchain's initial state.
-- [`service.rs`](./node/src/service.rs): This file defines the node
-  implementation. Take note of the libraries that this file imports and the
-  names of the functions it invokes. In particular, there are references to
-  consensus-related topics, such as the [block finalization and
-  forks](https://docs.substrate.io/fundamentals/consensus/#finalization-and-forks)
-  and other [consensus
-  mechanisms](https://docs.substrate.io/fundamentals/consensus/#default-consensus-models)
-  such as Aura for block authoring and GRANDPA for finality.
-
-### Runtime
-
-In Substrate, the terms "runtime" and "state transition function" are analogous.
-Both terms refer to the core logic of the blockchain that is responsible for
-validating blocks and executing the state changes they define. The Substrate
-project in this repository uses
-[FRAME](https://docs.substrate.io/learn/runtime-development/#frame) to construct
-a blockchain runtime. FRAME allows runtime developers to declare domain-specific
-logic in modules called "pallets". At the heart of FRAME is a helpful [macro
-language](https://docs.substrate.io/reference/frame-macros/) that makes it easy
-to create pallets and flexibly compose them to create blockchains that can
-address [a variety of needs](https://substrate.io/ecosystem/projects/).
-
-Review the [FRAME runtime implementation](./runtime/src/lib.rs) included in this
-node and note the following:
-
-- This file configures several pallets to include in the runtime. Each pallet
-  configuration is defined by a code block that begins with `impl
-$PALLET_NAME::Config for Runtime`.
-- The pallets are composed into a single runtime by way of the
-  [`construct_runtime!`](https://paritytech.github.io/substrate/master/frame_support/macro.construct_runtime.html)
-  macro, which is part of the [core FRAME pallet
-  library](https://docs.substrate.io/reference/frame-pallets/#system-pallets).
-
-### Pallets
-
-The runtime in this project is constructed using many FRAME pallets that ship
-with [the Substrate
-repository](https://github.com/paritytech/polkadot-sdk/tree/master/substrate/frame) and a
-quantumfusion pallet that is [defined in the
-`pallets`](./pallets/quantumfusion/src/lib.rs) directory.
-
-A FRAME pallet is comprised of a number of blockchain primitives, including:
-
-- Storage: FRAME defines a rich set of powerful [storage
-  abstractions](https://docs.substrate.io/build/runtime-storage/) that makes it
-  easy to use Substrate's efficient key-value database to manage the evolving
-  state of a blockchain.
-- Dispatchables: FRAME pallets define special types of functions that can be
-  invoked (dispatched) from outside of the runtime in order to update its state.
-- Events: Substrate uses
-  [events](https://docs.substrate.io/build/events-and-errors/) to notify users
-  of significant state changes.
-- Errors: When a dispatchable fails, it returns an error.
-
-Each pallet has its own `Config` trait which serves as a configuration interface
-to generically define the types and parameters it depends on.
+Join us in pioneering the future of parallel computing, driving innovation, and transforming technology across industries. For more information, visit our [website](https://quantumfusion.pro/) and follow us on [GitHub](https://github.com/MemechiKekamoto/quantumfusion-node).
