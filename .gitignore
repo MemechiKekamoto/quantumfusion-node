@@ -11,6 +11,5 @@
 .direnv
 
 .devcontainer/
-.github/
 .vscode/
 *.lock
