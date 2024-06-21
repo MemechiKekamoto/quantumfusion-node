@@ -56,6 +56,7 @@ pub fn development_config() -> Result<ChainSpec, String> {
 		true,
 	))
 	.with_properties(token_properties())
+	.with_protocol_id("QF")
 	.build())
 }
 
@@ -90,6 +91,7 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 		true,
 	))
 	.with_properties(token_properties())
+	.with_protocol_id("QF")
 	.build())
 }
 
