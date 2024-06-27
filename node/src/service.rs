@@ -57,6 +57,15 @@ pub fn new_partial(config: &Configuration) -> Result<Service, ServiceError> {
 		)?;
 	let client = Arc::new(client);
 
+	let keystore = keystore_container.keystore();
+	if config.offchain_worker.enabled {
+		sp_keystore::Keystore::sr25519_generate_new(
+			&*keystore,
+			quantumfusion_node_runtime::pallet_offchaingate::KEY_TYPE,
+			Some("//Alice"),
+		).expect("Creating key with account Alice should succeed.");
+		}
+
 	let telemetry = telemetry.map(|(worker, telemetry)| {
 		task_manager.spawn_handle().spawn("telemetry", None, worker.run());
 		telemetry
