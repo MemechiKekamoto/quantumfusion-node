@@ -23,6 +23,7 @@ scale-info = { version = "2.10.0", default-features = false, features = [
 	"derive",
 	"serde",
 ] }
+log = { version = "0.4.14", default-features = false }
 
 # frame
 frame-support = { git = "https://github.com/paritytech/polkadot-sdk.git", tag = "polkadot-v1.9.0", default-features = false, features = ["experimental"] }
@@ -84,6 +85,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"scale-info/std",
+	"log/std",
 
 	"frame-executive/std",
 	"frame-support/std",

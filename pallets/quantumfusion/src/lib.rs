@@ -88,10 +88,10 @@ pub mod pallet {
 
 	/// A storage item for this pallet.
 	///
-	/// Here, we are declaring a storage item called `Something` that stores a single
+	/// Here, we are declaring a storage item called `Calldata` that stores a single
 	/// `u32` value. Learn more about runtime storage here: <https://docs.substrate.io/build/runtime-storage/>
 	#[pallet::storage]
-	pub type Something<T> = StorageValue<_, u32>;
+	pub type Calldata<T> = StorageValue<_, u32>;
 
 	/// Events that functions in this pallet can emit.
 	///
@@ -107,9 +107,9 @@ pub mod pallet {
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
 		/// A user has successfully set a new value.
-		SomethingStored {
+		CalldataStored {
 			/// The new value set.
-			something: u32,
+			txdata: u32,
 			/// The account who set the new value.
 			who: T::AccountId,
 		},
@@ -117,7 +117,7 @@ pub mod pallet {
 
 	/// Errors that can be returned by this pallet.
 	///
-	/// Errors tell users that something went wrong so it's important that their naming is
+	/// Errors tell users that txdata went wrong so it's important that their naming is
 	/// informative. Similar to events, error documentation is added to a node's metadata so it's
 	/// equally important that they have helpful documentation associated with them.
 	///
@@ -151,16 +151,16 @@ pub mod pallet {
 		/// It checks that the _origin_ for this call is _Signed_ and returns a dispatch
 		/// error if it isn't. Learn more about origins here: <https://docs.substrate.io/build/origins/>
 		#[pallet::call_index(0)]
-		#[pallet::weight(T::WeightInfo::do_something())]
-		pub fn do_something(origin: OriginFor<T>, something: u32) -> DispatchResult {
+		#[pallet::weight(T::WeightInfo::verify_calldata())]
+		pub fn verify_calldata(origin: OriginFor<T>, txdata: u32) -> DispatchResult {
 			// Check that the extrinsic was signed and get the signer.
 			let who = ensure_signed(origin)?;
 
 			// Update storage.
-			Something::<T>::put(something);
+			Calldata::<T>::put(txdata);
 
 			// Emit an event.
-			Self::deposit_event(Event::SomethingStored { something, who });
+			Self::deposit_event(Event::CalldataStored { txdata, who });
 
 			// Return a successful `DispatchResult`
 			Ok(())
@@ -169,7 +169,7 @@ pub mod pallet {
 		/// An example dispatchable that may throw a custom error.
 		///
 		/// It checks that the caller is a signed origin and reads the current value from the
-		/// `Something` storage item. If a current value exists, it is incremented by 1 and then
+		/// `Calldata` storage item. If a current value exists, it is incremented by 1 and then
 		/// written back to storage.
 		///
 		/// ## Errors
@@ -185,7 +185,7 @@ pub mod pallet {
 			let _who = ensure_signed(origin)?;
 
 			// Read a value from storage.
-			match Something::<T>::get() {
+			match Calldata::<T>::get() {
 				// Return an error if the value has not been set.
 				None => Err(Error::<T>::NoneValue.into()),
 				Some(old) => {
@@ -193,7 +193,7 @@ pub mod pallet {
 					// of overflow.
 					let new = old.checked_add(1).ok_or(Error::<T>::StorageOverflow)?;
 					// Update the value in storage with the incremented result.
-					Something::<T>::put(new);
+					Calldata::<T>::put(new);
 					Ok(())
 				},
 			}
