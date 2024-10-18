@@ -13,3 +13,4 @@
 .devcontainer/
 .vscode/
 *.lock
+*.log

@@ -1,0 +1,1 @@
+./target/release/quantumfusion-node --dev > node.log
